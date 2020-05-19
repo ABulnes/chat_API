@@ -10,6 +10,9 @@ env.config({path:"./config/local.env"})
 // Router
 const router = require('./network/routes')
 
+//Database
+const db = require('./network/db');
+
 //Server configuration
 var app = express();
 
