@@ -25,8 +25,13 @@ async function getMessages(filterUser) {
   if (filterUser !== null) {
     filter = { user: filterUser };
   }
-  const messages = await Model.find(filter);
-  return messages;
+  try{
+    const messages = await Model.find(filter).populate('user').exec();
+    return messages;
+  }catch(err){
+    return err;
+  }
+  
 }
 
 /**

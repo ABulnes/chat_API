@@ -9,8 +9,8 @@ const Schema = moongose.Schema;
 
 const messageSchema = new Schema({
     user: {
-        type: String,
-        required: true,
+        type: Schema.ObjectId,
+        ref:  'User',
     },
     message: {
         type: String,
