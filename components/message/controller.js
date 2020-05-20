@@ -11,13 +11,14 @@ const store = require("./store");
  * @returns Created message
  * 
  */
-const addMessage = (user, message) => {
+const addMessage = (user, message, chat) => {
   return new Promise((resolve, reject) => {
-    if (!user || !message) {
+    if (!user || !message || !chat) {
       reject("Missing data");
       return false;
     }
     const fullMessage = {
+      chat,
       user,
       message,
       date: new Date(),

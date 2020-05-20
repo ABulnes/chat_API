@@ -16,9 +16,9 @@ const controller = require("./controller");
  * @access public
  */
 router.post("/", async (req, res) => {
-  const { user, message } = req.body;
+  const { user, message, chat } = req.body;
   try {
-    const result = await controller.addMessage(user, message);
+    const result = await controller.addMessage(user, message, chat);
     if (result) {
       response.success(req, res, result, 201);
     }

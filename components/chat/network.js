@@ -26,18 +26,18 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * @route GET /chat/
+ * @route GET /chat/<userid | optional >
  * @description Endpoint for listing chats
  * @access public
  */
-router.get("/", async (req, res) => {
-    try {
-        const chats = await controller.getChats();
-        response.success(req, res, chats);
-    }catch(err){
-        response.error(req, res, 'Internal error', 500, err);
-    }
+router.get("/:userId", async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const chats = await controller.getChats(userId);
+    response.success(req, res, chats);
+  } catch (err) {
+    response.error(req, res, "Internal error", 500, err);
+  }
 });
-
 
 module.exports = router;

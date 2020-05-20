@@ -21,8 +21,8 @@ const createChat = (users) => {
 /**
  * Controller logic for listing chats
  */
-const getChats = () => {
-    return store.list();
+const getChats = (userId) => {
+    return store.list(userId);
 }
 
 module.exports = {

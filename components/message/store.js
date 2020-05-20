@@ -23,7 +23,7 @@ function saveMessage(message) {
 async function getMessages(filterUser) {
   let filter = {};
   if (filterUser !== null) {
-    filter = { user: filterUser };
+    filter = { 'chat': filterUser };
   }
   try{
     const messages = await Model.find(filter).populate('user').exec();

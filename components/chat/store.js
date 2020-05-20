@@ -15,8 +15,14 @@ function createChat(users){
 /**
  * List all the chat availables in database
  */
-async function getChats(){
-    return await Model.find().populate('users').exec();
+async function getChats(userId){
+    let filter = {};
+    if(userId){
+       filter = {
+           'users': userId
+       }
+    }
+    return await Model.find(filter).populate('users').exec();
 }
 
 
