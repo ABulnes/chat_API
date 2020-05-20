@@ -4,6 +4,12 @@
 const express = require("express");
 const router = express.Router();
 
+//Multer
+const multer = require("multer");
+const upload = multer({
+  dest: "uploads/",
+});
+
 //Modules
 const response = require("../../network/response");
 const controller = require("./controller");
@@ -11,14 +17,15 @@ const controller = require("./controller");
 // Routes
 
 /**
- * @route POST /messsage/ 
+ * @route POST /messsage/
  * @description Endpoint for creating a message
  * @access public
  */
-router.post("/", async (req, res) => {
+router.post("/", upload.single("file"), async (req, res) => {
+ 
   const { user, message, chat } = req.body;
   try {
-    const result = await controller.addMessage(user, message, chat);
+    const result = await controller.addMessage(user, message, chat, req.file);
     if (result) {
       response.success(req, res, result, 201);
     }
@@ -28,12 +35,12 @@ router.post("/", async (req, res) => {
 });
 
 /**
- * @route GET /messsage/ 
+ * @route GET /messsage/
  * @description Endpoint for listing message
  * @access public
  */
 router.get("/", async (req, res) => {
-  const filterMessage = req.query.user || null;
+  const filterMessage = req.query.chat || null;
 
   try {
     const messages = await controller.getMessages(filterMessage);
@@ -44,7 +51,7 @@ router.get("/", async (req, res) => {
 });
 
 /**
- * @route PATCH /messsage/ 
+ * @route PATCH /messsage/
  * @description Endpoint for updating content of the message
  * @access public
  */
@@ -64,7 +71,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 /**
- * @route DELETE /messsage/ 
+ * @route DELETE /messsage/
  * @description Endpoint for deleting a message
  * @access public
  */

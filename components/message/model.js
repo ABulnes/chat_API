@@ -20,7 +20,8 @@ const messageSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'Chat',
     },
-    date: Date
+    date: Date,
+    file: String,
 });
 
 //Model

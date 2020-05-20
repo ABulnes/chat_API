@@ -3,28 +3,41 @@
 //Store
 const store = require("./store");
 
+//Socket
+const socket = require('../../socket').socket;
 
 /**
  * Controller logic for add a message.
  * @param {string} user The user who wrote the message
  * @param {string} message  The message itself
  * @returns Created message
- * 
+ *
  */
-const addMessage = (user, message, chat) => {
+const addMessage = (user, message, chat, file) => {
   return new Promise((resolve, reject) => {
     if (!user || !message || !chat) {
       reject("Missing data");
       return false;
     }
+
+
+    let fileUrl = "";
+    if (file) {
+      fileUrl = `http://localhost:3000/app/files/${file.filename}`;
+    }
+
     const fullMessage = {
       chat,
       user,
       message,
       date: new Date(),
+      file: fileUrl,
     };
 
+
     store.add(fullMessage);
+
+    socket.io.emit('message', fullMessage);
 
     resolve(fullMessage);
   });
@@ -33,7 +46,7 @@ const addMessage = (user, message, chat) => {
 /**
  * Controller logic for getting messages
  * @param {string} filterUser Filter message by user
- * 
+ *
  */
 const getMessages = (filterUser) => {
   return new Promise((resolve, reject) => {
