@@ -12,6 +12,7 @@ const router = require('./network/routes')
 
 //Database
 const db = require('./network/db');
+db();
 
 //Server configuration
 var app = express();
